@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import api from "../services/api";
 import TakeQuiz from "../components/TakeQuiz";
 
@@ -43,6 +44,7 @@ function GenerateQuiz({ presetQuiz }) {
       setLoading(false);
     }
   };
+const MotionDiv = motion?.div || "div";
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -120,7 +122,7 @@ function GenerateQuiz({ presetQuiz }) {
               </p>
 
               {/* QUESTIONS */}
-              <motion.div
+              <MotionDiv
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -186,7 +188,7 @@ function GenerateQuiz({ presetQuiz }) {
                     </p>
                   </motion.div>
                 ))}
-              </motion.div>
+              </MotionDiv>
 
               {/* RELATED TOPICS */}
               {quizData.related_topics &&
