@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://ai-wiki-quiz-generator-backend-pzys.onrender.com",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export default api;
