@@ -2,11 +2,14 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./quiz.db")
+ENV = os.getenv("RENDER", "false")
 
-connect_args = {}
-if DATABASE_URL.startswith("sqlite"):
-    connect_args = {"check_same_thread": False}
+if ENV == "true":
+    DATABASE_URL = "sqlite:///./quiz.db"
+else:
+    DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./quiz.db")
+
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
 engine = create_engine(DATABASE_URL, connect_args=connect_args)
 
