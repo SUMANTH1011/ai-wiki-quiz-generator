@@ -1,0 +1,16 @@
+{
+  "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+  "title": "Alan Turing",
+  "quiz": [
+    {
+      "question": "Who was Alan Turing?",
+      "options": [
+        "A mathematician",
+        "A physicist",
+        "A chemist",
+        "A biologist"
+      ],
+      "answer": "A mathematician"
+    }
+  ]
+}
