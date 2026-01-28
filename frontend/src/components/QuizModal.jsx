@@ -1,7 +1,7 @@
 function QuizModal({ quiz, onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-      <div className="bg-white p-6 max-w-3xl w-full rounded-xl shadow-2xl overflow-y-auto max-h-[90vh]">
+     <div className="bg-white dark:bg-[#020617] text-black dark:text-gray-200">
         <div className="flex justify-between mb-4">
           <h3 className="text-xl font-bold">{quiz.title}</h3>
           <button
