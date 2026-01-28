@@ -6,6 +6,7 @@ function TakeQuiz({ quiz }) {
   const [current, setCurrent] = useState(0);
 
   const handleChange = (qIndex, option) => {
+    if (submitted) return;
     setAnswers({ ...answers, [qIndex]: option });
     setCurrent(qIndex);
   };
@@ -22,7 +23,7 @@ function TakeQuiz({ quiz }) {
         <p className="text-sm mb-2">
           Question {current + 1} / {quiz.length}
         </p>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
           <div
             className="bg-blue-600 h-2 rounded-full"
             style={{
@@ -38,36 +39,56 @@ function TakeQuiz({ quiz }) {
           className="bg-white dark:bg-gray-800
                      p-5 mb-5 rounded-xl shadow"
         >
-          <p className="font-semibold mb-2">
+          {/* QUESTION */}
+          <p className="font-semibold mb-3">
             {index + 1}. {q.question}
           </p>
 
-          {Object.values(q.options).map((opt, i) => (
-            <label key={i} className="block mt-2">
-              <input
-                type="radio"
-                name={`q-${index}`}
-                disabled={submitted}
-                checked={answers[index] === opt}
-                onChange={() => handleChange(index, opt)}
-                className="mr-2"
-              />
-              {opt}
-            </label>
-          ))}
+          {/* OPTIONS */}
+          {Object.values(q.options).map((opt, i) => {
+            const isSelected = answers[index] === opt;
+            const isCorrect = opt === q.answer;
 
-          {submitted && (
-            <p className="mt-2 text-green-600">
-              Correct: {q.answer}
-            </p>
-          )}
+            let optionStyle =
+              "flex items-center gap-2 p-3 rounded cursor-pointer transition ";
+
+            if (submitted) {
+              if (isCorrect) {
+                optionStyle +=
+                  "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+              } else if (isSelected) {
+                optionStyle +=
+                  "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+              } else {
+                optionStyle += "text-gray-500";
+              }
+            } else {
+              optionStyle +=
+                "hover:bg-gray-100 dark:hover:bg-gray-700";
+            }
+
+            return (
+              <label key={i} className={optionStyle}>
+                <input
+                  type="radio"
+                  name={`q-${index}`}
+                  disabled={submitted}
+                  checked={isSelected}
+                  onChange={() => handleChange(index, opt)}
+                />
+                {opt}
+              </label>
+            );
+          })}
         </div>
       ))}
 
+      {/* SUBMIT / SCORE */}
       {!submitted ? (
         <button
           onClick={() => setSubmitted(true)}
-          className="bg-green-600 text-white px-6 py-2 rounded"
+          className="bg-green-600 hover:bg-green-700
+                     text-white px-6 py-2 rounded-xl font-semibold"
         >
           Submit Quiz
         </button>
